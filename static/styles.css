@@ -586,7 +586,7 @@ video {
   animation: spin 2s linear infinite;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 40%;
   transform: translate(-50%, -50%);
   display: none;
   /* Hide the loader by default */
@@ -628,6 +628,11 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mx-6 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
 .grid {
   display: grid;
 }
@@ -644,8 +649,20 @@ video {
   width: '90%';
 }
 
+.w-\[\'0\%\'\] {
+  width: '0%';
+}
+
 .max-w-2xl {
   max-width: 42rem;
+}
+
+.max-w-xl {
+  max-width: 36rem;
+}
+
+.max-w-md {
+  max-width: 28rem;
 }
 
 .translate-x-60 {
