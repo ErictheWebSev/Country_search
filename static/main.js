@@ -1,22 +1,29 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
     fetchCountry();
+    performSearch();
+    
+    const sortDropdown = document.getElementById('sortCriteria');
+    sortDropdown.addEventListener('change', performSearch);
+    
     const searchButton = document.getElementById('searchButton');
     const searchBox = document.getElementById('searchInput');
     searchButton.addEventListener('click', performSearch);
     
     searchBox.addEventListener('keyup', (e) => {
       console.log(e.target.value);
-      if (e.code == "Enter") {
-        performSearch();
-      } else if (e.code == "Backspace") {
-        performSearch();
-    	} else {
-    	  console.log('enter a query');
-    	}
+      if (e.target.value.length > 0) {
+        console.log(e.target.value.length)
+        performSearch()
+      }
+        
   });
+  
+  
 });
+
+function formatPopulation(population) {
+  return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 
 function fetchCountry() {
   showLoader();
@@ -26,7 +33,7 @@ function fetchCountry() {
     hideLoader();
     const countryContainer = document.getElementById('countryContainer')
     countries.forEach(country => {
-      console.log(country)
+      
       const countryDiv = document.createElement('div');
       countryDiv.classList.add('cards');
   
@@ -41,7 +48,7 @@ function fetchCountry() {
 
         const population = document.createElement('p');
         population.classList.add('p');
-        population.textContent = `Population: ${country.population}`;
+        population.textContent = `Population: ${formatPopulation(country.population)}`;
 
         const independence = document.createElement('p');
         independence.classList.add('p');
@@ -71,7 +78,8 @@ function fetchCountry() {
 function performSearch() {
   const searchInput = document.getElementById('searchInput');
   console.log(searchInput.value);
-  const searchTerm = searchInput.value.toLowerCase();
+  const sortCriteria = document.getElementById('sortCriteria').value; 
+  const searchTerm = searchInput.value.trim().toLowerCase();
   showLoader();
   fetch('https://restcountries.com/v3/all/')
   .then(response => response.json())
@@ -86,12 +94,25 @@ function performSearch() {
     });
     
     if (filteredCountries.length === 0) {
-            alert(`No countries found for "${searchTerm}"`);
-            return;
+        const errorMsg = document.getElementById('errorMsg');
+        errorMsg.style.display = 'block';
+        errorMsg.textContent = `No results for
+        ${searchInput.value}...`;
+         return;
         }
+
+    filteredCountries.sort((a, b) => {
+      if (sortCriteria === 'name') {
+        return a.name.common.localeCompare(b.name.common);
+      } else if (sortCriteria === 'independence') {
+        console.log(sortCriteria)
+        return (a.independent ? -1 : 1) - (b.independent ? -1 : 1);
+      } else if (sortCriteria === 'population') {
+         return a.population - b.population;
+      }
+    });
     
     filteredCountries.forEach(country => {
-      console.log(country.name.common)
       const countryDiv = document.createElement('div');
       countryDiv.classList.add('cards');
       
@@ -106,7 +127,7 @@ function performSearch() {
       
       const population = document.createElement('p');
       population.classList.add('p');
-      population.textContent = `Population: ${country.population}`;
+      population.textContent = `Population: ${formatPopulation(country.population)}`;
       
       const independence = document.createElement('p');
       independence.classList.add('p');

@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="static/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden"> 
   <div class="loader" id="loader">
   </div>
-    <div class="relative max-w-md sm:mx-auto w-['90%'] sm:w-full">
+    <div class="relative max-w-md sm:mx-auto w-['90%'] sm:w-full sticky top-0">
       <input type="text" id="searchInput" placeholder="Search Country"
       class="w-['100%'] sm:w-1/2 h-10 px-7 py-6 rounded-xl text-xl text-teal-700 border
       border-teal-700 my-2 relative mx-8 sm:mx-12">
@@ -18,12 +18,29 @@
   left-5 transform translate-x-60 sm:left-0 sm:translate-x-64"><i class="fas
   fa-search text-teal-700"></i></button>
     </div> 
+    
+    <div class="w-2/3 bg-gray-100 p-4 rounded-xl mx-auto">
+      
+    <label for="sortCriteria" class="text-2xl font-bold ">Sort by:</label>
+    <select id="sortCriteria" class="w-42 h-42 rounded-xl">
+      <option value="name">Name</option>
+      <option value="independence">Independence</option>
+      <option value="population">Population</option>
+</select>
+</div>
+
+  <div id="errorMsg" class="w-45 bg-red-500 px-12 py-4 text-center text-white
+  rounded-lg mx-auto my-10 hidden">
+</div>
+
+
 
   <div id="countryContainer" class="grid grid-cols-1 sm:grid-cols-3 gap-4 px-6
   py-4">
     
     <div class="h2 image p cards ">
     </div>
+
 
  </div>
 <script src="static/main.js"></script>
