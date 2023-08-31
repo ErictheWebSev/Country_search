@@ -99,6 +99,8 @@ function performSearch() {
         errorMsg.textContent = `No results for
         ${searchInput.value}...`;
          return;
+        } else {
+          errorMsg.style.display = 'none';
         }
 
     filteredCountries.sort((a, b) => {
